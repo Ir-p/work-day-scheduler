@@ -1,11 +1,18 @@
 
 function init (){
-
+    
     // add an event listener to the save button
-    // loop through every row and target the SAVE BUTTON and attach this listener to EVERY SAVE BUTTON
-    // google-> do i have to iterate to attach event listeners to multiple buttons
     $('.saveBtn').on ("click", addEvent);
-    // add/save event 
+    // loop through every row and target the SAVE BUTTON and attach this listener to EVERY SAVE BUTTON
+    $('.row').each(function(){
+        var buttons = document.getElementsByTagName('.saveBtn')
+
+        for(let i=0; i < buttons.length; i++) {
+            var buttons = buttons[i]
+            $('.saveBtn').on ("click", addEvent);
+        }
+    })
+   
     
     function addEvent() {
         // find the text area value of the container
@@ -17,23 +24,18 @@ function init (){
         // store the time as a key and event as value in local storage
         localStorage.setItem(hour, value);
     }
-    // create function called add event
+
+    // // create function called add event
     $('description').addClass('show');
     setTimeout(function(){
         $('.description').removeClass('show');
     }, 1000);
 
 
-
-
     // read local storage and assign to time slots
     var x = localStorage.getItem("");
 
-    // add event listener to save buttons
 
-
-    // add to header
-    // $(document).ready(function() {
     // set time in header
     function addTimeToHeader() {
     var timeEl = document.getElementById("currentDay");
@@ -42,7 +44,6 @@ function init (){
     addTimeToHeader();
 
     // add color to time slot
-    // add appropriate class to hour elements (past, future, present)
     function addColorToTimeSlot() {
     // get current hour
         var time = moment().hours();
