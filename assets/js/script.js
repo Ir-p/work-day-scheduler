@@ -2,40 +2,30 @@
 function init (){
     
     // add an event listener to the save button
-    $('.saveBtn').on ("click", addEvent);
+    $('.saveBtn').click((e)=>addEvent(e))
+
     // loop through every row and target the SAVE BUTTON and attach this listener to EVERY SAVE BUTTON
-    $('.row').each(function(){
-        var buttons = document.getElementsByTagName('.saveBtn')
-
-        for(let i=0; i < buttons.length; i++) {
-            var buttons = buttons[i]
-            $('.saveBtn').on ("click", addEvent);
-        }
-    })
-   
-    
-    function addEvent() {
+    function addEvent(e) {
         // find the text area value of the container
-        var value = $.trim($("textarea").val())
-
+        var hour = e.target.parentElement.firstElementChild.innerText
         // find the value of the time block
-        var hour = document.querySelector('.hour').textContent
-      
+        var value = JSON.stringify(e.target.previousElementSibling.value)
         // store the time as a key and event as value in local storage
         localStorage.setItem(hour, value);
     }
+
+    // read local storage and assign to time slots
+    $('.hour').each(function() {
+        var hourSaved = $(this)[0].innerText
+        $(this)[0].nextElementSibling.innerText = localStorage.getItem(hourSaved)
+    })
 
     // // create function called add event
     $('description').addClass('show');
     setTimeout(function(){
         $('.description').removeClass('show');
     }, 1000);
-
-
-    // read local storage and assign to time slots
-    var x = localStorage.getItem("");
-
-
+    
     // set time in header
     function addTimeToHeader() {
     var timeEl = document.getElementById("currentDay");
